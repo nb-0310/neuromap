@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Moon, Sun, Loader2Icon, AlertCircleIcon, Github } from "lucide-react";
@@ -20,7 +20,7 @@ type ErrorState = {
 export default function Home() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const router = useRouter();
-  const [openWalkthrough, setOpenWalkthrough] = useState(false);
+  // const [openWalkthrough, setOpenWalkthrough] = useState(false);
   const [loading, setLoading] = useState(false);
   const [repoUrl, setRepoUrl] = useState("");
   const [error, setError] = useState<ErrorState | null>(null);

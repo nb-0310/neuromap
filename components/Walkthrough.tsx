@@ -12,16 +12,26 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Info, Code2, ShieldAlert } from "lucide-react";
+import {
+  Info,
+  Code2,
+  ShieldAlert,
+  Eye,
+  Github,
+  Lightbulb,
+  Folders,
+  FileMinus,
+  GaugeCircle,
+  Zap,
+  Database,
+} from "lucide-react";
 
 export default function WalkthroughModal() {
   const [step, setStep] = useState(1);
+  const [open, setOpen] = useState(true);
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Start Onboarding</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold">
@@ -42,7 +52,7 @@ export default function WalkthroughModal() {
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <Info className="h-8 w-8" />
+                  <Eye className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">
@@ -56,7 +66,7 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <Info className="h-8 w-8" />
+                  <Github className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">
@@ -70,7 +80,7 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <Info className="h-8 w-8" />
+                  <Lightbulb className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">Keep these tips in mind</p>
@@ -100,7 +110,7 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <Code2 className="h-8 w-8" />
+                  <Folders className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">Simple repo structure</p>
@@ -112,7 +122,7 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <Code2 className="h-8 w-8" />
+                  <FileMinus className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">
@@ -131,7 +141,7 @@ export default function WalkthroughModal() {
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <ShieldAlert className="h-8 w-8" />
+                  <GaugeCircle className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">
@@ -145,12 +155,12 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <ShieldAlert className="h-8 w-8" />
+                  <Zap className="h-8 w-8" />
                 </div>
                 <div>
                   <p className="text-lg font-medium">Want unlimited use?</p>
                   <p className="text-muted-foreground">
-                    Clone the repo → switch to <code>__no_rate_limit</code> →
+                    Clone the repo → switch to <code>nm__no_rate_limit</code> →
                     add your GitHub token → run locally. (see README for
                     details)
                   </p>
@@ -158,23 +168,16 @@ export default function WalkthroughModal() {
               </div>
               <div className="flex items-start gap-4">
                 <div className="rounded-lg bg-muted p-3">
-                  <ShieldAlert className="h-8 w-8" />
+                  <Database className="h-8 w-8" />
                 </div>
                 <div>
-                  {/* <div>
-        <p className="text-lg font-medium">Redis caching</p>
-        <p className="text-muted-foreground">
-          If you call the same repo again within an hour, it won't make extra API calls — the data comes from cache.  
-          Works on local; on the Vercel host it may differ.
-        </p>
-      </div> */}
                   <p className="text-lg font-medium">
                     Redis - Saviour to Testers
                   </p>
                   <p className="text-muted-foreground">
-                    If you call the same repo again within an hour, it won't
-                    make extra API calls — the data comes from cache. Works on
-                    local; on the Vercel host it may differ.
+                    If you call the same repo again within an hour, it
+                    won&apos;t make extra API calls — the data comes from cache.
+                    Works on local; on the Vercel host it may differ.
                   </p>
                 </div>
               </div>
@@ -184,19 +187,39 @@ export default function WalkthroughModal() {
 
         <DialogFooter className="flex justify-between">
           <DialogClose asChild>
-            <Button variant="outline">Skip</Button>
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="cursor-pointer"
+            >
+              Skip
+            </Button>
           </DialogClose>
           <div className="flex gap-2">
             {step > 1 && (
-              <Button variant="outline" onClick={() => setStep(step - 1)}>
+              <Button
+                variant="outline"
+                onClick={() => setStep(step - 1)}
+                className="cursor-pointer"
+              >
                 Back
               </Button>
             )}
             {step < 3 ? (
-              <Button onClick={() => setStep(step + 1)}>Next</Button>
+              <Button
+                onClick={() => setStep(step + 1)}
+                className="cursor-pointer"
+              >
+                Next
+              </Button>
             ) : (
               <DialogClose asChild>
-                <Button>Finish</Button>
+                <Button
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer"
+                >
+                  Finish
+                </Button>
               </DialogClose>
             )}
           </div>

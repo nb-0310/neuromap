@@ -4,15 +4,47 @@ import { fetchGitHubRepo, fetchPackageJson } from "@/lib/github";
 import { AppError } from "@/lib/errors";
 import { analyzeRepo } from "@/lib/analyzeRepo";
 import redis from "@/lib/redis";
+import { rateLimitOncePerDay } from "@/lib/rateLimit";
 
-import type {Graph} from "@/lib/analyzeRepo"
+import type { Graph } from "@/lib/analyzeRepo";
 
 type CachedData = {
   repo: Record<string, unknown>;
   analysis: Graph;
 };
 
+const MY_IPS = process.env.MY_IPS?.split(",") ?? [];
+
+function isMyIp(ip: string): boolean {
+  return MY_IPS.includes(ip);
+}
+
 export async function POST(req: NextRequest) {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  const ip = forwardedFor?.split(",")[0] ?? "unknown";
+
+  if (!isMyIp(ip)) {
+    const { allowed } = await rateLimitOncePerDay(ip);
+
+    if (!allowed) {
+      // return NextResponse.json(
+      //   { message: "Rate limit exceeded. Only once per day allowed." },
+      //   { status: 429 }
+      // );
+      throw new AppError(
+        "Rate Limit Exceeded",
+        "For now you can only create a map once per day",
+        [
+          "Due to Github REST API having IP Address based rate limiting, I have implemented the same.",
+          "If you want to play with this more, please clone the repo, switch to nm__no_rate_limit branch, put your own github token and tr in local.",
+          "If you input a large repo which exceeded more than 55 js/ts/jsx/tsx files then also it won't work anymore",
+        ]
+      );
+    }
+  } else {
+    console.log ("Skipping rate limiting for my own IP Addresses.")
+  }
+
   try {
     const { repoUrl } = await req.json();
     if (!repoUrl) {
