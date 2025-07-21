@@ -150,7 +150,7 @@ export default function WalkthroughModal() {
                 <div>
                   <p className="text-lg font-medium">Want unlimited use?</p>
                   <p className="text-muted-foreground">
-                    Clone the repo → switch to <code>__no_rate_limit</code> →
+                    Clone the repo → switch to <code>nm__no_rate_limit</code> →
                     add your GitHub token → run locally. (see README for
                     details)
                   </p>
@@ -161,13 +161,6 @@ export default function WalkthroughModal() {
                   <ShieldAlert className="h-8 w-8" />
                 </div>
                 <div>
-                  {/* <div>
-        <p className="text-lg font-medium">Redis caching</p>
-        <p className="text-muted-foreground">
-          If you call the same repo again within an hour, it won't make extra API calls — the data comes from cache.  
-          Works on local; on the Vercel host it may differ.
-        </p>
-      </div> */}
                   <p className="text-lg font-medium">
                     Redis - Saviour to Testers
                   </p>
