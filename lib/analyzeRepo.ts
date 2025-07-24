@@ -1,5 +1,3 @@
-// lib/analyzeRepo.ts
-
 import fetch from "node-fetch";
 import type { ImportDeclaration } from "@babel/types";
 
